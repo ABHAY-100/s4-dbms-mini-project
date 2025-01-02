@@ -13,19 +13,40 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { supabase } from "@/utils/supabase/client";
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export function AuthForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error('Error fetching session:', error);
+        return;
+      }
+
+      if (session) {
+        // If user is authenticated, redirect to dashboard
+        router.push('/dashboard');
+      }
+    };
+
+    checkUserAuth();
+  }, [router]);
 
   const handleMagicLinkLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'http://localhost:3000/dashboard', // Adjust this URL as needed
+        emailRedirectTo: 'http://localhost:3000/auth/callback', // Adjust this URL as needed
       },
     });
 
@@ -40,7 +61,7 @@ export function AuthForm({
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:3000/dashboard',
+        redirectTo: 'http://localhost:3000/auth/callback',
       },
     });
     
@@ -65,7 +86,7 @@ export function AuthForm({
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="johndoe@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
