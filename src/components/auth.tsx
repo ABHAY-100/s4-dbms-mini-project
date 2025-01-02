@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,10 +10,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { supabase } from "@/utils/supabase/client";
-import { useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function AuthForm({
   className,
@@ -25,16 +24,18 @@ export function AuthForm({
 
   useEffect(() => {
     const checkUserAuth = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
 
       if (error) {
-        console.error('Error fetching session:', error);
+        console.error("Error fetching session:", error);
         return;
       }
 
       if (session) {
-        // If user is authenticated, redirect to dashboard
-        router.push('/dashboard');
+        router.push("/dashboard");
       }
     };
 
@@ -46,30 +47,29 @@ export function AuthForm({
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'http://localhost:3000/auth/callback', // Adjust this URL as needed
+        emailRedirectTo: "http://localhost:3000/auth/callback",
       },
     });
 
     if (error) {
-      alert('Error sending magic link: ' + error.message);
+      alert("Error sending magic link: " + error.message);
     } else {
-      alert('Check your email for the magic link!');
+      alert("Check your email for the magic link!");
     }
   };
 
   const handleGoogleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
-        redirectTo: 'http://localhost:3000/auth/callback',
+        redirectTo: "http://localhost:3000/auth/callback",
       },
     });
-    
+
     if (error) {
-      alert('Error signing in with Google: ' + error.message);
+      alert("Error signing in with Google: " + error.message);
     }
   };
-  
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -95,7 +95,12 @@ export function AuthForm({
               <Button type="submit" className="w-full">
                 Continue with Email
               </Button>
-              <Button type="button" variant="outline" className="w-full" onClick={handleGoogleLogin}>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={handleGoogleLogin}
+              >
                 Sign In with Google
               </Button>
             </div>

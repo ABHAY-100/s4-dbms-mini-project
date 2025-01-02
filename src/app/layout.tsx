@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vitae",
-  description: "Mortuary Management System",
+  title: "DeadSet",
+  description: "DeadSet - Your badass mortuary sidekick!",
 };
 
 export default function RootLayout({
