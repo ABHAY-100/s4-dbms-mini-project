@@ -1,9 +1,13 @@
 "use client";
-import { useEffect } from 'react';
+import { useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation'; // Adjust based on your Next.js version
 import { supabase } from "@/utils/supabase/client"; // Adjust the import path as necessary
 
-const ProtectedRoute = ({ children }) => {
+interface ProtectedRouteProps {
+  children: ReactNode; // Define children as ReactNode
+}
+
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const router = useRouter();
 
   useEffect(() => {
