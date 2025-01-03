@@ -47,7 +47,7 @@ export function AuthForm({
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: "http://localhost:3000/auth/callback",
+        emailRedirectTo: "https://deathset-application.vercel.app/auth/callback",
       },
     });
 
