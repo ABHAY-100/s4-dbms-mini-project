@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import MailChecker from 'mailchecker';
 
 export function AuthForm({
   className,
@@ -44,6 +45,13 @@ export function AuthForm({
 
   const handleMagicLinkLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate the email before proceeding
+    if (!MailChecker.isValid(email)) {
+      alert("Temporary email addresses are not allowed.");
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
