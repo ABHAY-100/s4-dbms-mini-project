@@ -62,7 +62,7 @@ export function AuthForm({
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:3000/auth/callback",
+        redirectTo: "https://deathset-application.vercel.app/auth/callback",
       },
     });
 
