@@ -1,21 +1,19 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter for navigation
-import { supabase } from "@/utils/supabase/client"; // Adjust the import path as necessary
-import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { supabase } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut(); // Log out the user
+    const { error } = await supabase.auth.signOut();
 
     if (error) {
-      console.error('Error logging out:', error.message);
+      console.error("Error logging out:", error.message);
     } else {
-      // Redirect to auth page after logging out
-      router.push('/auth');
+      router.push("/auth");
     }
   };
 
@@ -23,7 +21,10 @@ const Dashboard = () => {
     <ProtectedRoute>
       <div>
         <h1>Dashboard</h1>
-        <button onClick={handleLogout} className="mt-4 p-2 bg-red-500 text-white rounded">
+        <button
+          onClick={handleLogout}
+          className="mt-4 p-2 bg-red-500 text-white rounded"
+        >
           Logout
         </button>
       </div>

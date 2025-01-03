@@ -1,10 +1,11 @@
 "use client";
+
 import { useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/navigation'; // Adjust based on your Next.js version
-import { supabase } from "@/utils/supabase/client"; // Adjust the import path as necessary
+import { useRouter } from 'next/navigation';
+import { supabase } from "@/utils/supabase/client";
 
 interface ProtectedRouteProps {
-  children: ReactNode; // Define children as ReactNode
+  children: ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
@@ -15,7 +16,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       const { data: { session }, error } = await supabase.auth.getSession();
 
       if (error || !session) {
-        // If there is no session, redirect to auth page
         router.push('/auth');
       }
     };
@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     checkUserAuth();
   }, [router]);
 
-  return <>{children}</>; // Render children if authenticated
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
