@@ -55,7 +55,7 @@ export function AuthForm({
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: "https://deathset-application.vercel.app/auth/callback",
+        emailRedirectTo: "http://localhost:3000/auth/callback",
       },
     });
 
@@ -70,7 +70,7 @@ export function AuthForm({
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://deathset-application.vercel.app/auth/callback",
+        redirectTo: "http://localhost:3000/auth/callback",
       },
     });
 
@@ -83,7 +83,7 @@ export function AuthForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Welcome to Vitae</CardTitle>
+          <CardTitle className="text-2xl">Welcome to DeathSet</CardTitle>
           <CardDescription>Please sign in or sign up below.</CardDescription>
         </CardHeader>
         <CardContent>
